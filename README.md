@@ -1,4 +1,5 @@
 # BurningShooter
+## From discord chat filled with existential dread.
 - make map builder for yourself as another program that (after finished) gives you code for a world 
 - Each gun has different abilities like sniper had better aim and more damage but slower reload and UZI has fast speed but bad aim and damage - Have weight of items as a factor affecting speed 
 - Health changes 
