@@ -54,6 +54,7 @@ public class main implements ApplicationListener {
 		batch.draw(texture, playerX, playerY*0, player.getWidth(), player.getHeight());
 		//batch.draw(texture, playerX, playerY);
 		batch.end();
+		System.out.println("test");
 	}
 
 	
