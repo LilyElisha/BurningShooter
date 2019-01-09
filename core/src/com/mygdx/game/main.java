@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class main implements ApplicationListener {
     public static int canvisWidth = 800;
     public static int canvisHeight = 480;
-    private SpriteBatch batch;
+    static SpriteBatch batch;
     private double playerSize = .4; //can be local variable.
     public static Sprite backgroundSprite;
     public static int backgroundSpriteX = 0;
