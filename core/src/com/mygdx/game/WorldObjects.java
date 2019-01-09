@@ -1,11 +1,17 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+@SuppressWarnings("unused")
 public class WorldObjects {
 	
-	public static void Square(TextureRegion texture, int x, int y, int width, int height) {
-		main.batch.draw(texture, x, y, 0, 0, width, height, 1, 1, 0);
+	public static ShapeRenderer shapeRender = new ShapeRenderer();
+	
+	public static void Square( int x, int y, int width, int height) {
+		shapeRender.begin();
+		shapeRender.rect(x, y, width, height);
+		shapeRender.end();
 	}
 	
 }

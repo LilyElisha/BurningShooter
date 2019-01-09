@@ -23,6 +23,7 @@ public class WorldSetup {
     public void start() {
         World_1x1 W1x1 = new World_1x1();
         W1x1.go();
+        //W1x1.objs();
         backgroundTexture = new Texture(Gdx.files.internal(WorldTexture));
         backgroundTexture2 = new Texture(Gdx.files.internal(WorldTexture));
         backgroundTexture3 = new Texture(Gdx.files.internal(WorldTexture));
