@@ -20,7 +20,7 @@ public class PlayerController {
 		
 		main.player = new Sprite(main.texture);
 		main.playerX = (main.canvisWidth*0);
-		main.playerY = (main.canvisHeight*0);
+		main.playerY = (main.canvisHeight*0); //can be 0
 	}
 	
 	public static void keyInput() {

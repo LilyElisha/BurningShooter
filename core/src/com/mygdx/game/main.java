@@ -11,13 +11,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 //import worlds.World_1x1;
-//asjdhfalksjdfakj
 @SuppressWarnings("unused")
 public class main implements ApplicationListener {
 	public static int canvisWidth = 800;
 	public static int canvisHeight = 480;
 	private SpriteBatch batch;
-	private double playerSize = .4;
+	private double playerSize = .4; //can be local variable.
     public static Sprite backgroundSprite;
     public static int backgroundSpriteX = 0;
     public static final int backgroundSpriteY = 0;
@@ -54,7 +53,7 @@ public class main implements ApplicationListener {
 		batch.draw(texture, playerX, playerY*0, player.getWidth(), player.getHeight());
 		//batch.draw(texture, playerX, playerY);
 		batch.end();
-		System.out.println("test");
+//		System.out.println("test");
 	}
 
 	

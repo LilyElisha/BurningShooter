@@ -16,7 +16,7 @@ import worlds.World_1x1;
 public class WorldSetup {
 	
 	public static String WorldTexture = "";
-    public static Texture backgroundTexture;
+    public static Texture backgroundTexture; //can be package private
     public static Texture backgroundTexture2;
     public static Texture backgroundTexture3;
 	public void start() {
