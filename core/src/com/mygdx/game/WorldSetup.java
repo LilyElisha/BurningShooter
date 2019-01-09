@@ -14,18 +14,18 @@ import worlds.World_1x1;
 
 @SuppressWarnings("unused")
 public class WorldSetup {
-
+    World_1x1 W1x1 = new World_1x1();
     public static String WorldTexture = "";
     public static Texture backgroundTexture; //can be package private
     public static Texture backgroundTexture2;
-    public static Texture backgroundTexture3;
 
     public void start() {
-        World_1x1 W1x1 = new World_1x1();
         W1x1.go();
-        //W1x1.objs();
         backgroundTexture = new Texture(Gdx.files.internal(WorldTexture));
         backgroundTexture2 = new Texture(Gdx.files.internal(WorldTexture));
-        backgroundTexture3 = new Texture(Gdx.files.internal(WorldTexture));
+    }
+    public static void WorldRender() {
+        World_1x1 W1x1 = new World_1x1();
+        W1x1.objs();
     }
 }
