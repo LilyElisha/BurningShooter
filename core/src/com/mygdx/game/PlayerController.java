@@ -26,12 +26,12 @@ public class PlayerController {
 	public static void keyInput() {
 		if (Gdx.input.isKeyPressed(Keys.D)) {
 			main.playerX++;
-			main.backgroundX++;
+			main.backgroundSpriteX++;
 		}
 				//&& main.playerX < main.canvisWidth-main.player.getWidth()
 		if (Gdx.input.isKeyPressed(Keys.A)){
 			main.playerX--;
-			main.backgroundX--;
+			main.backgroundSpriteX--;
 		}
 				//&& main.playerX > 0
 	}

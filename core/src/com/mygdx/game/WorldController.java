@@ -18,11 +18,11 @@ public class WorldController { //can pe package private
 		}*/
 		
 		//
-		if(main.backgroundX =< main.canvisWidth) {
-		     main.background2X = main.backgroundX - main.canvisWidth;
-		} else if (main.backgroundX => main.canvisWidth) {
-		     main.backgroundX = 0;
-		     main.background2X = main.backgroundX - main.canvisWidth;
+		if(main.backgroundSpriteX <= main.canvisWidth) {
+		     main.backgroundSprite2X = main.backgroundSpriteX - main.canvisWidth;
+		} else if (main.backgroundSpriteX >= main.canvisWidth) {
+		     main.backgroundSpriteX = 0;
+		     main.backgroundSprite2X = main.backgroundSpriteX - main.canvisWidth;
 		}
 		
 		//
