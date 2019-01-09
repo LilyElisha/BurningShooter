@@ -26,6 +26,4 @@ public class WorldSetup {
 		backgroundTexture2 = new Texture(Gdx.files.internal(WorldTexture));
 		backgroundTexture3 = new Texture(Gdx.files.internal(WorldTexture));
 	}
-
-	
 }
