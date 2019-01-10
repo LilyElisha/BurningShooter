@@ -17,7 +17,8 @@ public class WorldSetup {
     }
 
     private void world_1x1() {
-        WorldFileHandler.readWorldFile("worlds/World_1x1.world");
+        WorldFileHandler.readFile("worlds/World_1x1.world");
+        WorldFileHandler.readMultiLineFIle("worlds/test.world");
         backgroundTexture = new Texture(Gdx.files.internal(WorldFileHandler.texture));
         backgroundTexture2 = new Texture(Gdx.files.internal(WorldFileHandler.texture));
     }
