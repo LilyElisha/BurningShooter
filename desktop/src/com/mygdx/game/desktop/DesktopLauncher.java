@@ -13,6 +13,8 @@ public class DesktopLauncher {
         config.title = "game";
         config.width = canvisWidth;
         config.height = canvisHeight;
+        config.foregroundFPS = (60);
+        config.backgroundFPS = (60);
         new LwjglApplication(new main(), config);
     }
 }

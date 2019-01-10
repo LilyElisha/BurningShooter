@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class PlayerController {
     static int speed = 1;
-    public static int jump = 20;
+    public static int jump = 0;
+    private static int test = 0;
     
     static void keyInput() {
+    	jump++;
         if (Gdx.input.isKeyPressed(Keys.A)) {
             main.playerX += speed;
             main.backgroundSpriteX += speed;
@@ -18,14 +20,16 @@ public class PlayerController {
             main.playerX -= speed;
             main.backgroundSpriteX -= speed;
         }
-        if (Gdx.input.isKeyPressed(Keys.W) && main.playerY == 0) {
-        	for(main.Jumpframes = 0; main.Jumpframes < jump*100000; main.Jumpframes++) {
-        		//Gdx.graphics.setContinuousRendering(false);
-        		if(main.Jumpframes%100000 == 0) {
+        if (Gdx.input.isKeyPressed(Keys.W) && test == 0) {
+        		if (jump<50 || test == 0) {
         			main.playerY++;
+        		} else {
+        			test++;
         		}
-        	}
-        	//Gdx.graphics.setContinuousRendering(true);
+        }
+        if (main.playerY>=50) {
+        	test = 0;
+        	jump = 0;
         }
     }
 
