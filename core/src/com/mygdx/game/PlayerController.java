@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class PlayerController {
 
     public static void keyInput() {
-        if (Gdx.input.isKeyPressed(Keys.D)) {
+        if (Gdx.input.isKeyPressed(Keys.A)) {
             main.playerX++;
             main.backgroundSpriteX++;
         }
-        if (Gdx.input.isKeyPressed(Keys.A)) {
+        if (Gdx.input.isKeyPressed(Keys.D)) {
             main.playerX--;
             main.backgroundSpriteX--;
         }

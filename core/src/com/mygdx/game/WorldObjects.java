@@ -14,4 +14,7 @@ public class WorldObjects {
         shapeRender.rect(x + main.playerX, y, width, height);
         shapeRender.end();
     }
+    public static void enemy () {
+
+    }
 }

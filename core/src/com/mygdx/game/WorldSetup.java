@@ -9,15 +9,16 @@ public class WorldSetup {
     public static String WorldTexture = "";
     public static Texture backgroundTexture; //can be package private
     public static Texture backgroundTexture2;
-    World_1x1 W1x1 = new World_1x1();
+//    World_1x1 W1x1 = new World_1x1();
 
     public static void WorldRender() {
-        World_1x1 W1x1 = new World_1x1();
-        W1x1.objs();
+//        World_1x1 W1x1 = new World_1x1();
+//        W1x1.objs();
+        WorldObjects.Square(200, 200, 200, 200);
     }
 
     public void start() {
-        W1x1.go();
+        WorldFileHandler.readWorldFile("worlds/World_1x1.world");
         backgroundTexture = new Texture(Gdx.files.internal(WorldTexture));
         backgroundTexture2 = new Texture(Gdx.files.internal(WorldTexture));
     }
