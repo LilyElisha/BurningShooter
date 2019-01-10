@@ -8,22 +8,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
-//import worlds.World_1x1;
 public class main implements ApplicationListener {
     public static final int backgroundSpriteY = 0;
     public static final int backgroundSprite2Y = 0;
     public static int canvisWidth = 800;
     public static int canvisHeight = 480;
-//    public static Sprite backgroundSprite;
     public static int backgroundSpriteX = 0;
     public static Texture texture;
-//    public static Sprite backgroundSprite2;
     public static int backgroundSprite2X = -canvisWidth;
     public static Sprite player;
     public static int playerX;
     public static int playerY;
     static SpriteBatch batch;
-    private double playerSize = .4; //can be local variable.
+    private double playerSize = .4;
 
     public void create() {
         WorldObjects.shapeRender.setAutoShapeType(true);

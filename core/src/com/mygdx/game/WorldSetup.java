@@ -5,13 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 
 public class WorldSetup {
-    static Texture backgroundTexture; //can be package private
+    static Texture backgroundTexture;
     static Texture backgroundTexture2;
-//    World_1x1 W1x1 = new World_1x1();
 
     static void WorldRender() {
-//        World_1x1 W1x1 = new World_1x1();
-//        W1x1.objs();
         WorldObjects.Square(200, 200, 200, 200);
     }
 
