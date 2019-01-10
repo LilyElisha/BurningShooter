@@ -1,36 +1,42 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
+import worlds.World_1x1;
+
 
 //import worlds.World_1x1;
+@SuppressWarnings("unused")
 public class main implements ApplicationListener {
-    public static final int backgroundSpriteY = 0;
-    public static final int backgroundSprite2Y = 0;
-    public static final int backgroundSprite3Y = 0;
     public static int canvisWidth = 800;
     public static int canvisHeight = 480;
-    //    public static Sprite backgroundSprite;
+    static SpriteBatch batch;
+    private double playerSize = .4; //can be local variable.
+    public static Sprite backgroundSprite;
     public static int backgroundSpriteX = 0;
+    public static final int backgroundSpriteY = 0;
     public static Texture texture;
-    //    public static Sprite backgroundSprite2;
+    public static Sprite backgroundSprite2;
     public static int backgroundSprite2X = -canvisWidth;
-    //    public static Sprite backgroundSprite3;
-    public static int backgroundSprite3X = -canvisWidth * 2;
+    public static final int backgroundSprite2Y = 0;
     public static Sprite player;
     public static int playerX;
     public static int playerY;
-    static SpriteBatch batch;
-    private double playerSize = .4; //can be local variable.
 
     public void create() {
+        WorldObjects.shapeRender.setAutoShapeType(true);
         batch = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("imageedit_3_3813241913.png"));
-        //player.scale(0.5f);
         PlayerController class2 = new PlayerController();
         class2.Controller();
         WorldSetup class3 = new WorldSetup();
@@ -45,11 +51,9 @@ public class main implements ApplicationListener {
         batch.begin();
         batch.draw(WorldSetup.backgroundTexture, backgroundSpriteX, backgroundSpriteY);
         batch.draw(WorldSetup.backgroundTexture2, backgroundSprite2X, backgroundSprite2Y);
-        batch.draw(WorldSetup.backgroundTexture3, backgroundSprite3X, backgroundSprite3Y);
         batch.draw(texture, playerX, playerY * 0, player.getWidth(), player.getHeight());
-        //batch.draw(texture, playerX, playerY);
         batch.end();
-//		System.out.println("test");
+        WorldSetup.WorldRender();
     }
 
 
