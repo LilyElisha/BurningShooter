@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
 public class WorldObjects {
-    public static ShapeRenderer shapeRender = new ShapeRenderer();
+    static ShapeRenderer shapeRender = new ShapeRenderer();
 
-    public static void Square(int x, int y, int width, int height) {
+    static void Square(int x, int y, int width, int height) {
 
         shapeRender.setProjectionMatrix(main.batch.getProjectionMatrix());
         shapeRender.begin(ShapeType.Filled);

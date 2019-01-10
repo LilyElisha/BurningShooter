@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 public class WorldFileHandler {
-    public static String texture;
+    static String texture;
 
-    public static void readWorldFile(String worldLocation) {
+    static void readWorldFile(String worldLocation) {
 
         FileHandle file = Gdx.files.internal(worldLocation);
         String st = "";

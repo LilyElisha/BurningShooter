@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 
 public class PlayerController {
-    public static int speed = 1;
+    static int speed = 1;
     public static int jump = 1;
     private static boolean jumps = true;
 
-    public static void keyInput() {
+    static void keyInput() {
         if (Gdx.input.isKeyPressed(Keys.A)) {
             main.playerX += speed;
             main.backgroundSpriteX += speed;
@@ -19,7 +19,7 @@ public class PlayerController {
             main.playerX -= speed;
             main.backgroundSpriteX -= speed;
         }
-        if (Gdx.input.isKeyPressed(Keys.W) && jumps == true) {
+        if (Gdx.input.isKeyPressed(Keys.W) && jumps) {
             jumps = false;
             for (int i = 5; i > 0; i--) {
                 main.playerY += i;
@@ -32,7 +32,7 @@ public class PlayerController {
         }
     }
 
-    public void Controller() {
+    void Controller() {
 
         main.player = new Sprite(main.texture);
         main.playerX = (main.canvisWidth * 0);

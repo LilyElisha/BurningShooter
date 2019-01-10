@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
-public class WorldController { //can pe package private
-    public static void Scroll() { //can be package private whatever the heck that is
+class WorldController { //can pe package private
+    static void Scroll() { //can be package private whatever the heck that is
 
 
         if (main.backgroundSpriteX <= main.canvisWidth && main.backgroundSpriteX >= 0) { // if background 1 is on screen
