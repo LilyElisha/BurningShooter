@@ -1,37 +1,29 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-
-import worlds.World_1x1;
 
 
 //import worlds.World_1x1;
-@SuppressWarnings("unused")
 public class main implements ApplicationListener {
+    public static final int backgroundSpriteY = 0;
+    public static final int backgroundSprite2Y = 0;
     public static int canvisWidth = 800;
     public static int canvisHeight = 480;
-    static SpriteBatch batch;
-    private double playerSize = .4; //can be local variable.
-    public static Sprite backgroundSprite;
+//    public static Sprite backgroundSprite;
     public static int backgroundSpriteX = 0;
-    public static final int backgroundSpriteY = 0;
     public static Texture texture;
-    public static Sprite backgroundSprite2;
+//    public static Sprite backgroundSprite2;
     public static int backgroundSprite2X = -canvisWidth;
-    public static final int backgroundSprite2Y = 0;
     public static Sprite player;
     public static int playerX;
     public static int playerY;
+    static SpriteBatch batch;
+    private double playerSize = .4; //can be local variable.
 
     public void create() {
         WorldObjects.shapeRender.setAutoShapeType(true);

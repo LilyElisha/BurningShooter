@@ -1,20 +1,29 @@
 package worlds;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.WorldObjects;
 import com.mygdx.game.WorldSetup;
 
-@SuppressWarnings("unused")
+
 public class World_1x1 {
     public void go() {
-        //die.
-        //world file here
-        WorldSetup.WorldTexture = "sunny ground.png";
+
+        FileHandle file = Gdx.files.internal("worlds/World_1x1.world");
+        String st = "";
+        try {
+            st = file.readString();
+            System.out.println(st);
+        } catch (Exception e) {
+            System.out.println("No world found");
+        }
+
+        WorldSetup.WorldTexture = st;
     }
 
-    
+
     public void objs() {
-    	WorldObjects.Square(200, 200, 200, 200);
+        WorldObjects.Square(200, 200, 200, 200);
     }
 
 }
