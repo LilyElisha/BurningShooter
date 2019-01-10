@@ -43,7 +43,7 @@ public class main implements ApplicationListener {
         batch.begin();
         batch.draw(WorldSetup.backgroundTexture, backgroundSpriteX, backgroundSpriteY);
         batch.draw(WorldSetup.backgroundTexture2, backgroundSprite2X, backgroundSprite2Y);
-        batch.draw(texture, playerX, playerY * 0, player.getWidth(), player.getHeight());
+        batch.draw(texture, playerX, playerY, player.getWidth(), player.getHeight());
         batch.end();
         WorldSetup.WorldRender();
     }
