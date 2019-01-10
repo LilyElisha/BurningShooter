@@ -19,18 +19,16 @@ public class main implements ApplicationListener {
     public static Sprite player;
     public static int playerX;
     public static int playerY;
-    static SpriteBatch batch;
+    static SpriteBatch spriteBatch;
     static int Jumpframes = 0;
     private double playerSize = .4;
 
     public void create() {
         WorldObjects.shapeRender.setAutoShapeType(true);
-        batch = new SpriteBatch();
+        spriteBatch = new SpriteBatch();
         texture = new Texture(Gdx.files.internal("imageedit_3_3813241913.png"));
-        PlayerController class2 = new PlayerController();
-        class2.Controller();
-        WorldSetup class3 = new WorldSetup();
-        class3.start();
+        PlayerController.Controller();
+        WorldSetup.start();
         player.setSize((float) (player.getWidth() * playerSize), (float) (player.getHeight() * playerSize));
     }
 
@@ -38,11 +36,11 @@ public class main implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         PlayerController.keyInput();
         WorldController.Scroll();
-        batch.begin();
-        batch.draw(WorldSetup.backgroundTexture, backgroundSpriteX, backgroundSpriteY);
-        batch.draw(WorldSetup.backgroundTexture2, backgroundSprite2X, backgroundSprite2Y);
-        batch.draw(texture, playerX, playerY, player.getWidth(), player.getHeight());
-        batch.end();
+        spriteBatch.begin();
+        spriteBatch.draw(WorldSetup.backgroundTexture, backgroundSpriteX, backgroundSpriteY);
+        spriteBatch.draw(WorldSetup.backgroundTexture2, backgroundSprite2X, backgroundSprite2Y);
+        spriteBatch.draw(texture, playerX, playerY, player.getWidth(), player.getHeight());
+        spriteBatch.end();
         WorldSetup.WorldRender();
         //Jumpframes++;
     }

@@ -33,7 +33,7 @@ public class PlayerController {
         }
     }
 
-    void Controller() {
+    static void Controller() {
 
         main.player = new Sprite(main.texture);
         main.playerX = (main.canvisWidth * 0);
