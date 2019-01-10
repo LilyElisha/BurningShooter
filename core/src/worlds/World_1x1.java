@@ -9,7 +9,7 @@ import com.mygdx.game.WorldSetup;
 public class World_1x1 {
     public void go() {
 
-        FileHandle file = Gdx.files.internal("World_1x1.world");
+        FileHandle file = Gdx.files.internal("worlds/World_1x1.world");
         String st = "";
         try {
             st = file.readString();
