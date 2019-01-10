@@ -20,6 +20,7 @@ public class main implements ApplicationListener {
     public static int playerX;
     public static int playerY;
     static SpriteBatch batch;
+    static int Jumpframes = 0;
     private double playerSize = .4;
 
     public void create() {
@@ -43,6 +44,7 @@ public class main implements ApplicationListener {
         batch.draw(texture, playerX, playerY, player.getWidth(), player.getHeight());
         batch.end();
         WorldSetup.WorldRender();
+        //Jumpframes++;
     }
 
 
