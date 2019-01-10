@@ -21,13 +21,13 @@ public class PlayerController {
         }
         if (Gdx.input.isKeyPressed(Keys.W) && jumps) {
             jumps = false;
-            for (int i = 5; i > 0; i--) {
+            for (int i = 20; i > 0; i--) {
                 main.playerY += i;
             }
-            System.out.print("l");
-            for (int l = 5; l > 0; l--) {
-                main.playerY -= l;
-            }
+            //System.out.print("l");
+            //for (int l = 20; l > 0; l--) {
+                //main.playerY -= l;
+            //}
             jumps = true;
         }
     }
