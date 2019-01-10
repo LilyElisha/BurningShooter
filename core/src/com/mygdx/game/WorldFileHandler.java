@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 public class WorldFileHandler {
-    public static void readWorldFile (String worldLocation) {
+    public static String texture;
+
+    public static void readWorldFile(String worldLocation) {
 
         FileHandle file = Gdx.files.internal(worldLocation);
         String st = "";
@@ -15,6 +17,6 @@ public class WorldFileHandler {
             System.out.println("No world found");
         }
 
-        WorldSetup.WorldTexture = st;
+        texture = st;
     }
 }

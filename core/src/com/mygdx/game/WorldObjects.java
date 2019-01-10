@@ -15,6 +15,7 @@ public class WorldObjects {
         shapeRender.end();
     }
     public static void enemy () {
+        //TODO actually make this work.
 
     }
 }
