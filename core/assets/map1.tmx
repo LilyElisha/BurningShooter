@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#ffffff" nextlayerid="5" nextobjectid="31">
+ <tileset firstgid="1" source="sunny ground.tsx"/>
+ <tileset firstgid="2" source="terrain.tsx"/>
+ <layer id="1" name="background" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJztzwcNAAAIwDDwbxoThJO0CrYIAAAAAAAAAAAAAIAfcjugiY9bfMwoO7AABg==
+  </data>
+ </layer>
+ <layer id="2" name="graphics" width="240" height="13">
+  <data encoding="base64" compression="zlib">
+   eJzt07EJACAMRcF02rqW+w8kFmlFuwh38IrAbxMBAAAAAAAAb2Y730A9+0+zmy0AAABUNbqkX1v1tRlX
+  </data>
+ </layer>
+ <objectgroup color="#55ff7f" id="3" name="ground">
+  <object id="13" x="0" y="192" width="704" height="16"/>
+  <object id="15" x="704" y="192" width="256" height="16"/>
+  <object id="16" x="960" y="192" width="416" height="16"/>
+  <object id="18" x="1392" y="192" width="848" height="16"/>
+  <object id="20" x="1376" y="192" width="16" height="16"/>
+  <object id="23" x="2240" y="192" width="1520" height="16"/>
+  <object id="24" x="3776" y="192" width="64" height="16"/>
+  <object id="25" x="3758" y="192" width="18" height="16"/>
+ </objectgroup>
+ <objectgroup color="#ff5100" id="4" name="blocks">
+  <object id="27" x="288" y="128" width="16" height="16"/>
+  <object id="28" x="208" y="112" width="16" height="16"/>
+  <object id="29" x="144" y="112" width="16" height="16"/>
+  <object id="30" x="112" y="128" width="48" height="16"/>
+ </objectgroup>
+</map>
