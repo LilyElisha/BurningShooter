@@ -1,4 +1,4 @@
-package com.mygdx.game;
+ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -23,10 +24,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Sprites.InversePlayer;
+import com.mygdx.game.Sprites.Player;
 
 @SuppressWarnings("unused")
 public class PlayScreen implements Screen {
 	private main game;
+	private TextureAtlas atlas;
 	
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
@@ -41,8 +45,11 @@ public class PlayScreen implements Screen {
 	
 	
 	private Player player;
+	private InversePlayer inversePlayer;
 	
 	public PlayScreen(main game) {
+		atlas = new TextureAtlas("BurningShooterPlayer.pack");
+		
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new FitViewport(main.V_WIDTH / main.PPM, main.V_HEIGHT / main.PPM, gamecam);
@@ -56,42 +63,17 @@ public class PlayScreen implements Screen {
 		world = new World(new Vector2(0,-10), true);
 		b2dr = new Box2DDebugRenderer();
 		
-		player = new Player(world);
+		new B2WorldCreator(this);
 		
-		BodyDef bdef = new BodyDef();
-		PolygonShape shape = new PolygonShape();
-		FixtureDef fdef = new FixtureDef();
-		Body body;
+		player = new Player(this);
 		
+		inversePlayer = new InversePlayer(this, .32f, .32f);
 		
-		//ground layer
-		for(MapObject object : map.getLayers().get(/*if u go to Tiled 3rd party app and u go to layers count up from the bottom layer but start at 0 so 0 is background 3 is blocks ext*/2).getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
-			bdef.type = BodyDef.BodyType.StaticBody;
-			bdef.position.set((rect.getX() + rect.getWidth()/2) / main.PPM, (rect.getY() + rect.getHeight()/2) / main.PPM);
-			
-			body = world.createBody(bdef);
-			
-			shape.setAsBox(rect.getWidth()/2 / main.PPM, rect.getHeight()/2 / main.PPM);
-			fdef.shape = shape;
-			body.createFixture(fdef);
-		}
-		//bricks layer
-		for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
-			bdef.type = BodyDef.BodyType.StaticBody;
-			bdef.position.set((rect.getX() + rect.getWidth()/2) / main.PPM, (rect.getY() + rect.getHeight()/2) / main.PPM);
-			
-			body = world.createBody(bdef);
-			
-			shape.setAsBox(rect.getWidth()/2 / main.PPM, rect.getHeight()/2 / main.PPM);
-			fdef.shape = shape;
-			body.createFixture(fdef);
-		}
 	}
 	
+	public TextureAtlas getAtlas() {
+		return atlas;
+	}
 	
 	@Override
 	public void show() {
@@ -105,6 +87,8 @@ public class PlayScreen implements Screen {
 			player.b2body.applyLinearImpulse(new Vector2(0.1f , 0), player.b2body.getWorldCenter(), true);
 		if(Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
 			player.b2body.applyLinearImpulse(new Vector2(-0.1f , 0), player.b2body.getWorldCenter(), true);
+		//if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT))
+			
 	}
 	
 	public void update(float dt) {
@@ -112,9 +96,12 @@ public class PlayScreen implements Screen {
 		
 		world.step(1/60f, 6, 2);
 		
+		player.update(dt);
+		inversePlayer.update(dt);
+		
 		gamecam.position.x = player.b2body.getPosition().x;
 		
-		gamecam.update();
+		gamecam.update(); 
 		renderer.setView(gamecam);
 	}
 	
@@ -128,6 +115,12 @@ public class PlayScreen implements Screen {
 		
 		b2dr.render(world, gamecam.combined);
 		
+		game.batch.setProjectionMatrix(gamecam.combined);
+		game.batch.begin();
+		player.draw(game.batch);
+		inversePlayer.draw(game.batch);
+		game.batch.end();
+		
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
 	}
@@ -137,6 +130,13 @@ public class PlayScreen implements Screen {
 		gamePort.update(width, width);
 	}
 
+	public TiledMap getMap() {
+		return map;
+	}
+	public World getWorld() {
+		return world;
+	}
+	
 	@Override
 	public void pause() {
 
@@ -149,12 +149,16 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void hide() {
-
+		
 	}
 
 	@Override
 	public void dispose() {
-
+		map.dispose();
+		renderer.dispose();
+		world.dispose();
+		b2dr.dispose();
+		hud.dispose();
 	}
 
 }

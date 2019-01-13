@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#ffffff" nextlayerid="5" nextobjectid="31">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#ffffff" nextlayerid="6" nextobjectid="31">
  <tileset firstgid="1" source="sunny ground.tsx"/>
  <tileset firstgid="2" source="terrain.tsx"/>
- <layer id="1" name="background" width="240" height="13">
+ <layer id="5" name="background" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   eJztzwcNAAAIwDDwbxoThJO0CrYIAAAAAAAAAAAAAIAfcjugiY9bfMwoO7AABg==
+   eJztwzENAAAMA6B+c1/NVbEPEnpJVVVVVVVVVVVVVVVVHw+oQRha
   </data>
  </layer>
  <layer id="2" name="graphics" width="240" height="13">

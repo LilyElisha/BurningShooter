@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -7,14 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Hud {
+@SuppressWarnings("unused")
+public class Hud implements Disposable{
 	public Stage stage;
 	private Viewport viewport;
 	
-	@SuppressWarnings("unused")
 	private float timeCount;
 	
 	Label playerLabel;
@@ -34,5 +36,10 @@ public class Hud {
 		table.add(playerLabel);
 		
 		stage.addActor(table);
+	}
+
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 }
