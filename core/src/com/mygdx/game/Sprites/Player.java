@@ -19,7 +19,7 @@ public class Player extends Sprite {
 	public State currentState;
 	public State previosState;
 	public static World world;
-	public static Body b2body;
+	public Body b2body;
 	private TextureRegion playerStand;
 	private Animation<TextureRegion> playerRun;
 	private Animation<TextureRegion> playerJump;
@@ -39,15 +39,15 @@ public class Player extends Sprite {
 		
 		//run
 		for (int i = 0; i<4; i++)
-		frames.add(new TextureRegion(getTexture(), i * 14+1, 0, 14, 33));
-		playerRun = new Animation<TextureRegion>(0.1f, frames);
+		frames.add(new TextureRegion(getTexture(), i * 14, 0, 14, 33));
+		playerRun = new Animation<TextureRegion>(0.08f, frames);
 		frames.clear();
 		
 		//jump
 		for (int i = 0; i<2; i++)
-		frames.add(new TextureRegion(getTexture(), i * 14+1, 0, 14, 33));
+		frames.add(new TextureRegion(getTexture(), i * 14, 0, 14, 33));
 		playerJump = new Animation<TextureRegion>(0.1f, frames); 		
-		playerStand = new TextureRegion(getTexture(), 0, 0, 14+1, 33);
+		playerStand = new TextureRegion(getTexture(), 0, 0, 14, 33);
 		definePlayer();
 		setBounds(getX(), getY(), 14 / main.PPM, 33 / main.PPM);
 		setRegion(playerStand);
@@ -55,7 +55,7 @@ public class Player extends Sprite {
 	}
 	
 	public void update(float dt) {
-		setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+		setPosition((b2body.getPosition().x - getWidth() / 2), (float) ((b2body.getPosition().y - getHeight() / 2)-.011));
 		setRegion(getFrame(dt));
 	}
 	

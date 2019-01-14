@@ -17,7 +17,7 @@ public class InversePlayer extends Enemy {
 		super(screen, x, y);
 		frames = new Array<TextureRegion>();
 		for (int i = 0; i<4; i++)
-			frames.add(new TextureRegion(screen.getAtlas().findRegion("BurningShooterPlayer"), i * 14 + 56, 0, 14, 33));
+			frames.add(new TextureRegion(screen.getAtlas().findRegion("BurningShooterPlayer"), i * 14 + 55, 0, 14, 33));
 		walkAnimation = new Animation<TextureRegion>(0.1f, frames);
 		stateTime = 0;
 		setBounds(getX(), getY(), 14 / main.PPM, 33 / main.PPM);
@@ -25,8 +25,8 @@ public class InversePlayer extends Enemy {
 	
 	public void update(float dt) {
 		stateTime += dt;
-		setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-		setRegion(walkAnimation.getKeyFrame(stateTime, true));
+		setPosition((b2body.getPosition().x - getWidth() / 2), (float) ((b2body.getPosition().y - getHeight() / 2)-.011));
+		setRegion(walkAnimation.getKeyFrame(stateTime, false));
 	}
 
 	@Override

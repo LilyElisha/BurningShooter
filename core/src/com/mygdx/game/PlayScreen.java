@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Sprites.Bullet;
 import com.mygdx.game.Sprites.InversePlayer;
 import com.mygdx.game.Sprites.Player;
 
@@ -46,6 +47,7 @@ public class PlayScreen implements Screen {
 	
 	private Player player;
 	private InversePlayer inversePlayer;
+	private Bullet bullet;
 	
 	public PlayScreen(main game) {
 		atlas = new TextureAtlas("BurningShooterPlayer.pack");
@@ -69,6 +71,8 @@ public class PlayScreen implements Screen {
 		
 		inversePlayer = new InversePlayer(this, .32f, .32f);
 		
+		bullet = new Bullet(this, .64f, .64f);
+		
 	}
 	
 	public TextureAtlas getAtlas() {
@@ -87,8 +91,22 @@ public class PlayScreen implements Screen {
 			player.b2body.applyLinearImpulse(new Vector2(0.1f , 0), player.b2body.getWorldCenter(), true);
 		if(Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
 			player.b2body.applyLinearImpulse(new Vector2(-0.1f , 0), player.b2body.getWorldCenter(), true);
-		//if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT))
-			
+		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			bullet.b2body.setLinearVelocity(0, 0);
+			bullet.b2body.setTransform(new Vector2((float)(player.b2body.getPosition().x+player.getWidth()-(3/main.PPM)), (float)(player.b2body.getPosition().y)), 0);
+			bullet.b2body.applyLinearImpulse(new Vector2(Bullet.BULLET_SPEED, 0), bullet.b2body.getWorldCenter(), true);
+			Bullet.Right = true;
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+			bullet.b2body.setLinearVelocity(0, 0);
+			bullet.b2body.setTransform(new Vector2((float)(player.b2body.getPosition().x-player.getWidth()+(3/main.PPM)), (float)(player.b2body.getPosition().y)), 0);
+			bullet.b2body.applyLinearImpulse(new Vector2(-Bullet.BULLET_SPEED, 0), bullet.b2body.getWorldCenter(), true);
+			Bullet.Right = false;
+		}
+		//if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+			//bullet.b2body.setBullet(true);
+			//world.destroyBody(bullet.b2body);
+		//}
 	}
 	
 	public void update(float dt) {
@@ -96,8 +114,11 @@ public class PlayScreen implements Screen {
 		
 		world.step(1/60f, 6, 2);
 		
+		
+		
 		player.update(dt);
 		inversePlayer.update(dt);
+		bullet.update(dt);
 		
 		gamecam.position.x = player.b2body.getPosition().x;
 		
@@ -119,6 +140,7 @@ public class PlayScreen implements Screen {
 		game.batch.begin();
 		player.draw(game.batch);
 		inversePlayer.draw(game.batch);
+		bullet.draw(game.batch);
 		game.batch.end();
 		
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
