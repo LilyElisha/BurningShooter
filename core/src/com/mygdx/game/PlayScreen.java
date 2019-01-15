@@ -1,5 +1,7 @@
  package com.mygdx.game;
 
+import javax.swing.text.html.parser.Entity;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -17,16 +19,24 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Sprites.Bullet;
+import com.mygdx.game.Sprites.Enemy;
 import com.mygdx.game.Sprites.InversePlayer;
 import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.Sprites.projectile;
 
 @SuppressWarnings("unused")
 public class PlayScreen implements Screen {
@@ -48,10 +58,13 @@ public class PlayScreen implements Screen {
 	private Player player;
 	private InversePlayer inversePlayer;
 	private Bullet bullet;
-	
+		
+    Array<Body> activeBody;
+    Array<Body> destroyBody;
+    Array<Body> destroyBodyed;
+    
 	public PlayScreen(main game) {
 		atlas = new TextureAtlas("BurningShooterPlayer.pack");
-		
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new FitViewport(main.V_WIDTH / main.PPM, main.V_HEIGHT / main.PPM, gamecam);
@@ -61,8 +74,62 @@ public class PlayScreen implements Screen {
 		map = maploader.load("map1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / main.PPM);
 		gamecam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
-		
+
 		world = new World(new Vector2(0,-10), true);
+		
+		world.setContactListener(
+			    new ContactListener() {
+			        @Override
+			        public void beginContact(Contact contact) {
+			            Fixture fA = contact.getFixtureA();
+			            Fixture fB = contact.getFixtureB();
+			            String fAString = null;
+			            String fBString = null;
+			            if(Bullet.b2body.getFixtureList().contains(fA, false))
+			            	fAString = "Bullet";
+			            if(Bullet.b2body.getFixtureList().contains(fB, false))
+			            	fBString = "Bullet";
+			            if(InversePlayer.b2body.getFixtureList().contains(fA, false))
+			            	fAString = "InversePlayer";
+			            if(InversePlayer.b2body.getFixtureList().contains(fB, false))
+			            	fBString = "InversePlayer";
+			            if(fAString != null && fBString != null)
+			            	Gdx.app.log("beginContact", "between " + fAString + " and " + fBString);
+			        }
+
+			        @Override
+			        public void endContact(Contact contact) {
+			        }
+
+			        @Override
+			        public void preSolve(Contact contact, Manifold oldManifold) {
+			        	//if contact between inverse player and bullet
+			            if((InversePlayer.b2body.getFixtureList().contains(contact.getFixtureB(), false) && (Bullet.b2body.getFixtureList().contains(contact.getFixtureA(), false))) || (InversePlayer.b2body.getFixtureList().contains(contact.getFixtureA(), false) && (Bullet.b2body.getFixtureList().contains(contact.getFixtureB(), false)))) {
+			                if (contact.getFixtureA().getBody() instanceof Body
+			                        && contact.getFixtureB().getBody() instanceof Body) {
+			                     destroy(contact.getFixtureA().getBody());
+			                     destroy(contact.getFixtureB().getBody());
+			                }
+			            } else {
+			            	if(projectile.b2body.getFixtureList().contains(contact.getFixtureB(), false) && !player.b2body.getFixtureList().contains(contact.getFixtureA(), false)) {
+			            		destroy(contact.getFixtureB().getBody());
+			            	}
+			            	if(projectile.b2body.getFixtureList().contains(contact.getFixtureA(), false) && !player.b2body.getFixtureList().contains(contact.getFixtureB(), false)) {
+			            		destroy(contact.getFixtureA().getBody());
+			            	}	
+			            }
+			        }
+
+			        @Override
+			        public void postSolve(Contact contact, ContactImpulse impulse) {
+			            
+			        }
+			    });
+		
+        activeBody = new Array<Body>();
+        destroyBody = new Array<Body>();
+        destroyBodyed = new Array<Body>();
+		        
 		b2dr = new Box2DDebugRenderer();
 		
 		new B2WorldCreator(this);
@@ -73,6 +140,8 @@ public class PlayScreen implements Screen {
 		
 		bullet = new Bullet(this, .64f, .64f);
 		
+        destroy(projectile.b2body);
+		
 	}
 	
 	public TextureAtlas getAtlas() {
@@ -81,7 +150,6 @@ public class PlayScreen implements Screen {
 	
 	@Override
 	public void show() {
-
 	}
 	
 	public void handleInput(float dt) {
@@ -92,30 +160,37 @@ public class PlayScreen implements Screen {
 		if(Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2)
 			player.b2body.applyLinearImpulse(new Vector2(-0.1f , 0), player.b2body.getWorldCenter(), true);
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-			bullet.b2body.setLinearVelocity(0, 0);
-			bullet.b2body.setTransform(new Vector2((float)(player.b2body.getPosition().x+player.getWidth()-(3/main.PPM)), (float)(player.b2body.getPosition().y)), 0);
-			bullet.b2body.applyLinearImpulse(new Vector2(Bullet.BULLET_SPEED, 0), bullet.b2body.getWorldCenter(), true);
+			if(destroyBodyed.contains(projectile.b2body, false)) {
+				Bullet.defineBullet();
+				destroyBodyed.removeValue(projectile.b2body, false);
+			}
+			projectile.b2body.setLinearVelocity(0, 0);
+			projectile.b2body.setTransform(new Vector2((float)(player.b2body.getPosition().x+player.getWidth()-(3/main.PPM)), (float)(player.b2body.getPosition().y)), 0);
+			projectile.b2body.applyLinearImpulse(new Vector2(Bullet.BULLET_SPEED, 0), projectile.b2body.getWorldCenter(), true);
 			Bullet.Right = true;
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-			bullet.b2body.setLinearVelocity(0, 0);
-			bullet.b2body.setTransform(new Vector2((float)(player.b2body.getPosition().x-player.getWidth()+(3/main.PPM)), (float)(player.b2body.getPosition().y)), 0);
-			bullet.b2body.applyLinearImpulse(new Vector2(-Bullet.BULLET_SPEED, 0), bullet.b2body.getWorldCenter(), true);
+			if(destroyBodyed.contains(projectile.b2body, false)) {
+				Bullet.defineBullet();
+				destroyBodyed.removeValue(projectile.b2body, false);
+			}
+			projectile.b2body.setLinearVelocity(0, 0);
+			projectile.b2body.setTransform(new Vector2((float)(player.b2body.getPosition().x-player.getWidth()+(3/main.PPM)), (float)(player.b2body.getPosition().y)), 0);
+			projectile.b2body.applyLinearImpulse(new Vector2(-Bullet.BULLET_SPEED, 0), projectile.b2body.getWorldCenter(), true);
 			Bullet.Right = false;
 		}
-		//if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			//bullet.b2body.setBullet(true);
-			//world.destroyBody(bullet.b2body);
-		//}
 	}
 	
 	public void update(float dt) {
-		handleInput(dt);
 		
 		world.step(1/60f, 6, 2);
 		
+        for (Body body : destroyBody) {
+            world.destroyBody(body);
+       }
+       destroyBody.clear();
 		
-		
+		handleInput(dt);
 		player.update(dt);
 		inversePlayer.update(dt);
 		bullet.update(dt);
@@ -125,6 +200,14 @@ public class PlayScreen implements Screen {
 		gamecam.update(); 
 		renderer.setView(gamecam);
 	}
+	
+	 public void destroy(Body object) {
+         if (!destroyBody.contains(object, false)) {
+             destroyBody.add(object);
+             destroyBodyed.add(object);
+             activeBody.removeValue(object, true);
+         }
+     }
 	
 	@Override
 	public void render(float delta) {
@@ -139,10 +222,13 @@ public class PlayScreen implements Screen {
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
 		player.draw(game.batch);
-		inversePlayer.draw(game.batch);
-		bullet.draw(game.batch);
+		if(!destroyBodyed.contains(Enemy.b2body, false))
+			inversePlayer.draw(game.batch);
+		if(!destroyBodyed.contains(projectile.b2body, false)) {
+			bullet.draw(game.batch);
+		}
 		game.batch.end();
-		
+				
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
 	}

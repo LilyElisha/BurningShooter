@@ -6,14 +6,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.PlayScreen;
 
 public abstract class projectile extends Sprite{
-	protected World world;
+	protected static World world;
 	protected PlayScreen screen;
-	public Body b2body;
+	public static Body b2body;
 	public projectile(PlayScreen screen, float x, float y) {
-		this.world = screen.getWorld();
+		projectile.world = screen.getWorld();
 		this.screen = screen;
 		setPosition(x, y);
-		defineProjectile();
+		Bullet.defineBullet();
 	}
-	protected abstract void defineProjectile();
 }

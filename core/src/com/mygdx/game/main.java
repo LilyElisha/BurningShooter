@@ -16,9 +16,11 @@ public class main extends Game{
 	public static final int V_HEIGHT = 208;
 	public static final float PPM = 100;
 	
-	public static final short GROUND_BIT = 1;
-	public static final short ENEMY_BIT = 2; 
-	public static final short OBJECT_BIT = 4;
+	public static final short PLAYER_BIT = 0x0001;
+	public static final short GROUND_BIT = 0x0002;
+	public static final short ENEMY_BIT = 0x0004; 
+	public static final short OBJECT_BIT = 0x0008;
+	public static final short PROJECTILE_BIT = 0x0016;
 	
 	public SpriteBatch batch;
     

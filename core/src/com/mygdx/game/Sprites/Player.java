@@ -115,10 +115,8 @@ public class Player extends Sprite {
 		
 	    PolygonShape shape = new PolygonShape();
 	    shape.setAsBox(14 / 2 / main.PPM, 33 / 2 / main.PPM);
-	    fdef.filter.categoryBits = main.ENEMY_BIT;
-	    fdef.filter.maskBits = main.GROUND_BIT |
-	    		main.ENEMY_BIT |
-	    		main.OBJECT_BIT;
+	    fdef.filter.categoryBits = main.PLAYER_BIT;
+	    //fdef.filter.maskBits = main.GROUND_BIT | main.ENEMY_BIT;
 	    
 		fdef.shape = shape;
 		b2body.createFixture(fdef);

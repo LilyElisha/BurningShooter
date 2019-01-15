@@ -13,8 +13,9 @@ public class Bullet extends projectile{
 	private float stateTime;
 	private Animation<TextureRegion> walkAnimation;
 	private Array<TextureRegion> frames;
-	public static float BULLET_SPEED = 1f;
+	public static float BULLET_SPEED = 10f;
 	public static boolean Right = true;
+	public static String bulletname;
 	public Bullet(PlayScreen screen, float x, float y) {
 		super(screen, x, y);
 		frames = new Array<TextureRegion>();
@@ -37,25 +38,21 @@ public class Bullet extends projectile{
 		}
 		
 	}
-
-	@Override
-	protected void defineProjectile() {
-		BodyDef bdef = new BodyDef();
-		bdef.position.set(64 / main.PPM, 64 / main.PPM);
-		bdef.type = BodyDef.BodyType.DynamicBody;
-		b2body = world.createBody(bdef);
+	public static BodyDef bulletBdef = new BodyDef();
+	public static void defineBullet() {
+		bulletBdef.position.set(64 / main.PPM, 64 / main.PPM);
+		bulletBdef.type = BodyDef.BodyType.DynamicBody;
+		b2body = world.createBody(bulletBdef);
 		
 		FixtureDef fdef = new FixtureDef();
 		
 	    PolygonShape shape = new PolygonShape();
 	    shape.setAsBox((float) (7.5 / 2 / main.PPM), 4 / 2 / main.PPM);
-	    fdef.filter.categoryBits = main.ENEMY_BIT;
-	    fdef.filter.maskBits = main.GROUND_BIT |
-	    		main.ENEMY_BIT |
-	    		main.OBJECT_BIT;
+	    fdef.filter.categoryBits = main.PROJECTILE_BIT;
 		fdef.shape = shape;
 		fdef.density = 100;
+		b2body.setBullet(true);
 		b2body.createFixture(fdef);
-		b2body.setUserData(this);
+		b2body.setUserData(b2body);
 	}
 }

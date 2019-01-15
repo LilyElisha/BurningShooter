@@ -41,9 +41,7 @@ public class InversePlayer extends Enemy {
 	    PolygonShape shape = new PolygonShape();
 	    shape.setAsBox(14 / 2 / main.PPM, 33 / 2 / main.PPM);
 	    fdef.filter.categoryBits = main.ENEMY_BIT;
-	    fdef.filter.maskBits = main.GROUND_BIT |
-	    		main.ENEMY_BIT |
-	    		main.OBJECT_BIT;
+	   // fdef.filter.maskBits = main.GROUND_BIT | main.ENEMY_BIT | main.PROJECTILE_BIT;
 		
 		fdef.shape = shape;
 		b2body.createFixture(fdef);

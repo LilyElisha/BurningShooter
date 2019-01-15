@@ -7,7 +7,7 @@ import com.mygdx.game.PlayScreen;
 public abstract class Enemy extends Sprite{
 	protected World world;
 	protected PlayScreen screen;
-	public Body b2body;
+	public static Body b2body;
 	public Enemy(PlayScreen screen, float x, float y) {
 		this.world = screen.getWorld();
 		this.screen = screen;
